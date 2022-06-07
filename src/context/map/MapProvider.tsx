@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 import { MapContext } from './MapContext';
 import { mapReducer } from './mapReducer';
-import { Map } from 'mapbox-gl';
+import { Map, Marker, Popup } from 'mapbox-gl';
 
 export interface IMapState {
   isMapReady: boolean;
@@ -24,6 +24,18 @@ export const MapProvider = ({ children }: IProps) => {
   );
 
   const setMap = (map: Map) => {
+    const myLocationPopup = new Popup().setHTML(
+      `
+      <h4>Aquí estoy</h4>
+      <p>En algun lugar del mundo</p>
+      `
+    );
+
+    new Marker({ color: '#E74C3C' })
+      .setLngLat(map.getCenter())
+      .setPopup(myLocationPopup)
+      .addTo(map);
+
     dispatch({ type: 'setMap', payload: map });
   };
 
