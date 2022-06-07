@@ -1,6 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
+import './styles.css';
+
 import { MapsApp } from './MapsApp';
+
+//@ts-ignore
+import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
+
+mapboxgl.accessToken =
+  'pk.eyJ1Ijoia2xlcml0aCIsImEiOiJja3hramV2OWIwbjEwMzFwYzJlZWl6N2g5In0.iKXPpYvo7UPRiiZ-x_lCrw';
 
 if (!navigator.geolocation) {
   alert('Tu navegador no tiene opción de Geolocation');

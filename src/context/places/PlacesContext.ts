@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-export interface IPlacesContextProps {
+interface IPlacesContextProps {
   isLoading: boolean;
   userLocation?: [number, number];
 }
