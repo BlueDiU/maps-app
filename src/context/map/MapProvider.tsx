@@ -1,7 +1,7 @@
-import { Map } from 'mapbox-gl';
 import { useReducer } from 'react';
 import { MapContext } from './MapContext';
 import { mapReducer } from './mapReducer';
+import { Map } from 'mapbox-gl';
 
 export interface IMapState {
   isMapReady: boolean;
@@ -23,8 +23,18 @@ export const MapProvider = ({ children }: IProps) => {
     INITIAL_STATE
   );
 
+  const setMap = (map: Map) => {
+    dispatch({ type: 'setMap', payload: map });
+  };
+
   return (
-    <MapContext.Provider value={{ ...state }}>
+    <MapContext.Provider
+      value={{
+        ...state,
+        // Methods
+        setMap,
+      }}
+    >
       {children}
     </MapContext.Provider>
   );

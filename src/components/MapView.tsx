@@ -1,12 +1,15 @@
 import { useContext, useRef, useLayoutEffect } from 'react';
-import { PlacesContext } from '../context';
+import { PlacesContext, MapContext } from '../context';
 import { Loading } from './Loading';
 
 //@ts-ignore
 import { Map } from 'mapbox-gl';
 
 export function MapView() {
+  /* Context func */
   const { isLoading, userLocation } = useContext(PlacesContext);
+  const { setMap } = useContext(MapContext);
+
   const mapDiv = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -17,6 +20,8 @@ export function MapView() {
         center: userLocation, // starting position [lng, lat]
         zoom: 14, // starting zoom
       });
+
+      setMap(map);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);

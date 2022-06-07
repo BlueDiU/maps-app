@@ -11,9 +11,12 @@ export const mapReducer = (
   action: MapAction
 ): IMapState => {
   switch (action.type) {
-    /* case 'setMap':
-            
-            break; */
+    case 'setMap':
+      return {
+        ...state,
+        isMapReady: true,
+        map: action.payload,
+      };
 
     default:
       return state;
