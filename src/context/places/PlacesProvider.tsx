@@ -1,8 +1,14 @@
 import { useEffect, useReducer } from 'react';
-import { searchApi } from '../../apis';
-import { getUserLocation } from '../../helpers';
+
 import { PlacesContext } from './PlacesContext';
 import { placesReducer } from './placesReducer';
+import {
+  IFeature,
+  IPlacesResponse,
+} from '../../interfaces/places';
+
+import { getUserLocation } from '../../helpers';
+import { searchApi } from '../../apis';
 
 export interface IPlacesState {
   isLoading: boolean;
@@ -30,19 +36,24 @@ export const PlacesProvider = ({ children }: IProps) => {
     );
   }, []);
 
-  const searchPlacesByQuery = async (query: string) => {
+  const searchPlacesByQuery = async (
+    query: string
+  ): Promise<IFeature[]> => {
     if (query.length === 0) return [];
 
     if (!state.userLocation)
       throw new Error('No hay ubicación del usuario');
 
-    const resp = await searchApi.get(`/${query}.json`, {
-      params: { proximity: state.userLocation.join(',') },
-    });
+    const resp = await searchApi.get<IPlacesResponse>(
+      `/${query}.json`,
+      {
+        params: { proximity: state.userLocation.join(',') },
+      }
+    );
 
     console.log(resp.data);
 
-    return resp.data;
+    return resp.data.features;
   };
 
   return (
