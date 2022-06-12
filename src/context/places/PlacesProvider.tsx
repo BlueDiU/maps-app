@@ -13,11 +13,15 @@ import { searchApi } from '../../apis';
 export interface IPlacesState {
   isLoading: boolean;
   userLocation?: [number, number];
+  isLoadingPlaces: boolean;
+  places: IFeature[];
 }
 
 const INITIAL_STATE: IPlacesState = {
   isLoading: true,
   userLocation: undefined,
+  isLoadingPlaces: false,
+  places: [],
 };
 
 interface IProps {
@@ -44,6 +48,8 @@ export const PlacesProvider = ({ children }: IProps) => {
     if (!state.userLocation)
       throw new Error('No hay ubicación del usuario');
 
+    dispatch({ type: 'setLoadingPlaces' });
+
     const resp = await searchApi.get<IPlacesResponse>(
       `/${query}.json`,
       {
@@ -51,8 +57,7 @@ export const PlacesProvider = ({ children }: IProps) => {
       }
     );
 
-    console.log(resp.data);
-
+    dispatch({ type: 'setPlaces', payload: resp.data.features });
     return resp.data.features;
   };
 

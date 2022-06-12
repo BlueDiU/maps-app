@@ -1,9 +1,13 @@
+import { IFeature } from '../../interfaces/places';
 import { IPlacesState } from './PlacesProvider';
 
-type PlacesAction = {
-  type: 'setUserLocation';
-  payload: [number, number];
-};
+type PlacesAction =
+  | {
+      type: 'setUserLocation';
+      payload: [number, number];
+    }
+  | { type: 'setLoadingPlaces' }
+  | { type: 'setPlaces'; payload: IFeature[] };
 
 export const placesReducer = (
   state: IPlacesState,
@@ -15,6 +19,20 @@ export const placesReducer = (
         ...state,
         isLoading: false,
         userLocation: action.payload,
+      };
+
+    case 'setLoadingPlaces':
+      return {
+        ...state,
+        isLoadingPlaces: true,
+        places: [],
+      };
+
+    case 'setPlaces':
+      return {
+        ...state,
+        isLoadingPlaces: false,
+        places: action.payload,
       };
 
     default:
