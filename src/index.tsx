@@ -1,3 +1,4 @@
+/* eslint import/no-webpack-loader-syntax: off */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -6,7 +7,8 @@ import './styles.css';
 import { MapsApp } from './MapsApp';
 
 //@ts-ignore
-import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl from '!mapbox-gl';
 
 mapboxgl.accessToken =
   'pk.eyJ1Ijoia2xlcml0aCIsImEiOiJja3hramV2OWIwbjEwMzFwYzJlZWl6N2g5In0.iKXPpYvo7UPRiiZ-x_lCrw';

@@ -1,13 +1,11 @@
+/* eslint import/no-webpack-loader-syntax: off */
 import { useContext, useEffect, useReducer } from 'react';
 
 /* MapBox */
-import {
-  AnySourceData,
-  LngLatBounds,
-  Map,
-  Marker,
-  Popup,
-} from 'mapbox-gl';
+//@ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+// prettier-ignore
+import {AnySourceData, LngLatBounds, Map, Marker, Popup} from '!mapbox-gl';
 
 /* Context */
 import { MapContext } from './MapContext';

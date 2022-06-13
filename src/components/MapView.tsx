@@ -1,3 +1,4 @@
+/* eslint import/no-webpack-loader-syntax: off */
 import { useContext, useRef, useLayoutEffect } from 'react';
 
 import { Loading } from './Loading';
@@ -5,7 +6,8 @@ import { Loading } from './Loading';
 import { PlacesContext, MapContext } from '../context';
 
 //@ts-ignore
-import { Map } from 'mapbox-gl';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import { Map } from '!mapbox-gl';
 
 export function MapView() {
   /* Context func */
