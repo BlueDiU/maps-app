@@ -1,4 +1,4 @@
-# Map App using React & Typescript
+# MapApp using React & Typescript 🌎
 
 App created using MapBox Api
 
