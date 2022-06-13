@@ -1,5 +1,6 @@
-import { IFeature } from '../../interfaces/places';
 import { IPlacesState } from './PlacesProvider';
+
+import { IFeature } from '../../interfaces/places';
 
 type PlacesAction =
   | {

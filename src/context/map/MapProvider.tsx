@@ -1,4 +1,6 @@
 import { useContext, useEffect, useReducer } from 'react';
+
+/* MapBox */
 import {
   AnySourceData,
   LngLatBounds,
@@ -7,22 +9,29 @@ import {
   Popup,
 } from 'mapbox-gl';
 
+/* Context */
 import { MapContext } from './MapContext';
 import { mapReducer } from './mapReducer';
 import { PlacesContext } from '../places/PlacesContext';
+
+/* Apis */
 import { directionApi } from '../../apis';
+
+/* Interfaces */
 import { IDirectionResponse } from '../../interfaces/directions';
 
 export interface IMapState {
   isMapReady: boolean;
   map?: Map;
   markers: Marker[];
+  info: { kms: number; minutes: number };
 }
 
 const INITIAL_STATE: IMapState = {
   isMapReady: false,
   map: undefined,
   markers: [],
+  info: { kms: 0, minutes: 0 },
 };
 
 interface IProps {
@@ -41,12 +50,26 @@ export const MapProvider = ({ children }: IProps) => {
     state.markers.forEach((market) => market.remove());
     const newMarkers: Marker[] = [];
 
+    const { kms, minutes } = state.info;
+
     for (const place of places) {
       const [lng, lat] = place.center;
 
       const popup = new Popup().setHTML(`
         <h6>${place.text_es}</h6>
-        <p>${place.place_name_es}</p>`);
+        <p>${place.place_name_es}</p>
+        <hr />
+        <h6>Información adicional</h6>
+        <div>
+          <div>
+            <span class="text-secondary">Distacia en KM/H: </span> ${kms} KM
+          </div>
+          <div>
+            <span class="text-secondary">Tiempo estimado:</span>
+            ${minutes} minutos
+          </div>
+        </div>
+      `);
 
       const newMarker = new Marker()
         .setPopup(popup)
@@ -93,6 +116,7 @@ export const MapProvider = ({ children }: IProps) => {
     const minutes = Math.floor(duration / 60);
 
     console.log({ kms, minutes });
+    dispatch({ type: 'setInfo', payload: { kms, minutes } });
 
     const bounds = new LngLatBounds(start, start);
 

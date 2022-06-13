@@ -1,4 +1,5 @@
 import { Map, Marker } from 'mapbox-gl';
+
 import { IMapState } from './MapProvider';
 
 type MapAction =
@@ -6,7 +7,11 @@ type MapAction =
       type: 'setMap';
       payload: Map;
     }
-  | { type: 'setMarkers'; payload: Marker[] };
+  | { type: 'setMarkers'; payload: Marker[] }
+  | {
+      type: 'setInfo';
+      payload: { kms: number; minutes: number };
+    };
 
 export const mapReducer = (
   state: IMapState,
@@ -24,6 +29,12 @@ export const mapReducer = (
       return {
         ...state,
         markers: action.payload,
+      };
+
+    case 'setInfo':
+      return {
+        ...state,
+        info: action.payload,
       };
 
     default:

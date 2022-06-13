@@ -1,14 +1,18 @@
 import { useEffect, useReducer } from 'react';
 
+/* Context */
 import { PlacesContext } from './PlacesContext';
 import { placesReducer } from './placesReducer';
+
+/* Interfaces */
 import {
   IFeature,
   IPlacesResponse,
 } from '../../interfaces/places';
 
-import { getUserLocation } from '../../helpers';
+/* Others */
 import { searchApi } from '../../apis';
+import { getUserLocation } from '../../helpers';
 
 export interface IPlacesState {
   isLoading: boolean;
