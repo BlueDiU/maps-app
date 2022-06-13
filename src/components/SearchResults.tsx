@@ -4,8 +4,9 @@ import { LoadingPlaces } from './LoadingPlaces';
 import { IFeature } from '../interfaces/places';
 
 export const SearchResults = () => {
-  const { places, isLoadingPlaces } = useContext(PlacesContext);
-  const { map } = useContext(MapContext);
+  const { places, isLoadingPlaces, userLocation } =
+    useContext(PlacesContext);
+  const { map, getRouteBetweenPoints } = useContext(MapContext);
 
   const [activeId, setActiveId] = useState<string>('');
 
@@ -25,6 +26,13 @@ export const SearchResults = () => {
   if (places.length === 0) {
     return <></>;
   }
+
+  const getRoute = (place: IFeature) => {
+    if (!userLocation) return;
+    const [lng, lat] = place.center;
+
+    getRouteBetweenPoints(userLocation, [lng, lat]);
+  };
 
   return (
     <ul
@@ -52,6 +60,7 @@ export const SearchResults = () => {
             {place.place_name}
           </p>
           <button
+            onClick={() => getRoute(place)}
             className={`btn btn-sm  ${
               activeId === place.id
                 ? 'btn-outline-light'
